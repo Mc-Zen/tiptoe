@@ -208,7 +208,7 @@ The combined marks are automatically lined up one after the other, always the ne
 By default, the path is shortened until the last mark. This behaviour can be overriden by adding an `end` element somewhere in the mark list. The position of the `end` element between the marks defines where the line or path should end. 
 
 
-## Defining custom marks <defining>
+## Defining custom marks
 
 A mark is just a function that accepts a named `line` argument and that returns a dictionary `(mark: .., end: ..)` where `mark` holds the rendered mark and `end` is a length that specifies the amount by which the line or path needs to be shortened. 
 
@@ -301,7 +301,7 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
 
 
 
-## Difference between built-in and tiptoe `path()` <apart>
+## Difference between built-in and tiptoe `path()`
 
 
 While the built-in [`path`][typst-path] function returns a block-level element with a size that measures from `(0pt, 0pt)` to the largest (positive) coordinate, the corresponding tiptoe function returns placed content (with zero-width and -height). 
