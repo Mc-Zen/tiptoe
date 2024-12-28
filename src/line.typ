@@ -26,7 +26,9 @@
     let length = length
     if end == none {
       end = start.zip((length*calc.cos(angle), length*calc.sin(angle))).map(array.sum)
-      if length.to-absolute() < 0pt {
+      if type(length) == ratio {
+        assert(angle in (0deg, 90deg), message: "When `length` is a ratio, the angle can only be 0deg or 90deg, found " + repr(angle)) 
+      } else if length.to-absolute() < 0pt {
         length *= -1
         angle += 180deg
       }
@@ -36,7 +38,7 @@
       angle = calc.atan2(dx, dy)
       length = 1pt * calc.sqrt(dx*dx + dy*dy)
     }
-    let original-line = std.line(start: start, end: end, stroke: stroke)
+    let original-line = std.line(start: start, angle: angle, length: length, stroke: stroke)
     
     let toe-pos = start
     if toe != none {
