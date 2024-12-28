@@ -47,7 +47,7 @@
     assert(false, message: "Unexpected named argument \"" + args.named().keys().first() + "\"")
   }
   stroke = std.stroke(stroke)
-  assert(type(shorten) in (ratio, dictionary), message: "Expected ratio or dictionary for parameter `shorten`, found " + repr(type(shorten)))
+  assert(type(shorten) in (ratio, dictionary), message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten)))
   if type(shorten) == ratio {
     shorten = (start: shorten, end: shorten)
   } else if type(shorten) == dictionary {
