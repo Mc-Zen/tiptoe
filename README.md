@@ -8,7 +8,7 @@
 
 _Arrows for [Typst][typst] paths and other stories._
 
-[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.1.1%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.2.0%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
 [![Test Status](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml/badge.svg)](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Mc-Zen/tiptoe/blob/main/LICENSE)
 
