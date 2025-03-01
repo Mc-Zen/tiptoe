@@ -18,9 +18,9 @@
   let offset = if align == end { stroke.thickness / 2 } else { 0pt }
 
   (
-    mark: place(std.path(
-      (-offset, -width / 2),
-      (-offset, width / 2),
+    mark: place(std.line(
+      start: (-offset, -width / 2),
+      end: (-offset, width / 2),
       stroke: stroke
     )),
     end: offset
@@ -43,11 +43,11 @@
   (width, length) = (length, width)
   let s = stroke.thickness / 2
   let y = width / 2 - s
-  let mark = place(std.path(
-    (-length, -y),
-    (-s, -y),
-    (-s, y),
-    (-length, y),
+  let mark = place(curve(
+    curve.move((-length, -y)),
+    curve.line((-s, -y), relative: false),
+    curve.line((-s, y), relative: false),
+    curve.line((-length, y), relative: false),
     stroke: stroke
   ))
   if rev {
@@ -83,8 +83,8 @@
 
   let path = if fill == auto and is-auto-stroke {
     // very common optimization for filled arrows
-    path(closed: true,
-      (0pt, 0pt), 
+    polygon(
+      (0pt, 0pt),
       (-length, dhalf), 
       (-length + Δl, 0pt), 
       (-length, -dhalf), 
@@ -113,7 +113,7 @@
       (length - Δl - x1 - x, x4, y)
     }
     tip-length = x3
-    path(closed: true,
+    polygon(
       (-x3, 0pt), 
       (-x, y), 
       (-x4, 0pt), 
@@ -166,12 +166,11 @@
     inset = length * inset
   }
 
-  let mark = place(path(
+  let mark = place(polygon(
     (-s, 0pt),
     (-length + s, 0.5 * width - s),
     (-length + inset + s, 0pt),
     (-length + s, -0.5 * width + s),
-    closed: true,
     fill: utility.chained-if-auto(fill, stroke.paint, black),
     stroke: std.stroke(
       thickness: stroke.thickness, 
@@ -213,10 +212,10 @@
   let α = calc.atan(0.5 * width / length)
   let tip-length = 0.5 * stroke.thickness / calc.sin(α)
 
-  let mark = place(path(
-    (-length + s, 0.5 * width - s),
-    (-tip-length, 0pt),
-    (-length + s, -0.5 * width + s),
+  let mark = place(curve(
+    curve.move((-length + s, 0.5 * width - s)),
+    curve.line((-tip-length, 0pt), relative: false),
+    curve.line((-length + s, -0.5 * width + s), relative: false),
     stroke: std.stroke(
       thickness: stroke.thickness, 
       paint: utility.if-auto(stroke.paint, black), 
@@ -261,13 +260,12 @@
   assert(align in (center, end))
   let offset = if align == center { length / 2 } else { 0pt }
 
-  let mark = place(dx: offset, path(
+  let mark = place(dx: offset, polygon(
     (-length / 2, dhalf - top-length),
     (-tip-length, 0pt),
     (-length / 2, -dhalf + top-length),
     (-length + tip-length, 0pt),
     stroke: stroke,
-    closed: true,
     fill: utility.chained-if-auto(fill, stroke.paint, black)
   ))
   
@@ -295,14 +293,13 @@
   let s = stroke.thickness / 2
   let y = width/2 - s
   let mark = place(dx: offset,
-    path(
+    polygon(
       (-s, y),
       (-length + s, y),
       (-length + s, -y),
       (-s, -y),
       stroke: stroke, 
       fill: utility.chained-if-auto(fill, stroke.paint, black),
-      closed: true
     )
   )
 
@@ -489,11 +486,21 @@
   }
   let x0 = if sharp { stroke.thickness/width*10pt } else { -s }
   let mark = place(
-    path(
-      stroke: stroke,
-      ((-width*.42, -width/2 + s), (-width*.1, -width*.4)),
-      (x0, 0pt),
-      ((-width*.42, width/2 - s), (width*.1, -width*.4)),
+    curve(
+      curve.move((-width * 0.42, -width / 2 + s)),
+      curve.cubic(
+        (-width * 0.32, -width * 0.1 + s), 
+        none, 
+        (x0, 0pt),
+        relative: false
+      ),
+      curve.cubic(
+        none, 
+        (-width * 0.32, width * 0.1 - s), 
+        (-width * 0.42, width / 2 - s),
+        relative: false
+      ),
+      stroke: stroke
     )
   )
   

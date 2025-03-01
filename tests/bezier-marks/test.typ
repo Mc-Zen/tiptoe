@@ -1,4 +1,5 @@
 #import "/src/tiptoe.typ" as tiptoe: *
+#import "/src/path-to-curve.typ": path-to-curve
 #set page(width: auto, height: auto, margin: 10pt)
 
 
@@ -60,7 +61,7 @@
 
 #let compare(..coords) = {
   place(path(..coords))
-  std.path(..coords, stroke: red)
+  path-to-curve(..coords, stroke: red)
 }
 
 #compare(

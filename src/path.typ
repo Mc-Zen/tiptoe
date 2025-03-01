@@ -1,5 +1,7 @@
 #import "marks.typ": *
 #import "assert.typ": assert-mark
+#import "path-to-curve.typ": path-to-curve
+
 
 #let add(p, q) = p.zip(q).map(array.sum)
 #let sub(p, q) = p.zip(q).map(((a, b)) => a - b)
@@ -53,7 +55,7 @@
   } else if type(shorten) == dictionary {
     assert(shorten.keys().sorted() == ("end", "start"), message: "Unexpected key, valid keys are \"start\" and \"end\"")
   }
-  let original-path = std.path(..args.pos())
+  let original-path = path-to-curve(..args.pos())
   context {
     let points = args.pos()
     let original-points = points
@@ -97,9 +99,9 @@
     
     let fill-rule = fill-rule
     if fill-rule == auto {
-      fill-rule = std.path.fill-rule
+      fill-rule = std.curve.fill-rule
     }
     
-    place(std.path(..points, stroke: stroke, fill: fill, closed: closed, fill-rule: fill-rule)) + marks
+    place(path-to-curve(..points, stroke: stroke, fill: fill, closed: closed, fill-rule: fill-rule)) + marks
   }
 }
