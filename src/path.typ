@@ -48,14 +48,23 @@
   if args.named().len() != 0 {
     assert(false, message: "Unexpected named argument \"" + args.named().keys().first() + "\"")
   }
+
   stroke = std.stroke(stroke)
-  assert(type(shorten) in (ratio, dictionary), message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten)))
+
+  assert(
+    type(shorten) in (ratio, dictionary), 
+    message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten))
+  )
   if type(shorten) == ratio {
     shorten = (start: shorten, end: shorten)
   } else if type(shorten) == dictionary {
-    assert(shorten.keys().sorted() == ("end", "start"), message: "Unexpected key, valid keys are \"start\" and \"end\"")
+    assert(
+      shorten.keys().sorted() == ("end", "start"), 
+      message: "Unexpected key, valid keys are \"start\" and \"end\""
+    )
   }
-  let original-path = path-to-curve(..args.pos())
+
+
   context {
     let points = args.pos()
     let original-points = points
