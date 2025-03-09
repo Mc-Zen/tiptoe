@@ -1,4 +1,5 @@
 #let if-auto(a, b) = if a == auto { b } else { a }
+#let if-none(a, b) = if a == none { b } else { a }
 #let chained-if-auto(..x) = x.pos().find(it => it != auto)
 
 
