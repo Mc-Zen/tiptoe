@@ -8,13 +8,13 @@
 
 _Arrows for [Typst][typst] paths and other stories._
 
-[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.2.0%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.0%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
 [![Test Status](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml/badge.svg)](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Mc-Zen/tiptoe/blob/main/LICENSE)
 
 ---
 
-*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `path()`. Moreover, it adds the geometric primitive `arc()`. 
+*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `curve()`, and `path()`. Moreover, it adds the geometric primitive `arc()`. 
 
 - [Tiptoe vs. Fletcher](#tiptoe-vs-fletcher)
 - [Available marks](#available-marks)
@@ -24,22 +24,21 @@ _Arrows for [Typst][typst] paths and other stories._
 - [Combining marks](#combining-marks)
 - [Defining custom marks](#defining-custom-marks)
 - [Arc](#arc)
-- [Difference between built in and tiptoe path](#difference-between-built-in-and-tiptoe-path)
+- [Difference between built in and tiptoe curve](#difference-between-built-in-and-tiptoe-curve)
 
 
-The functions `tiptoe.line()` and `tiptoe.path()` act as a drop-in replacement (except that [they are placed by default](#difference-between-built-in-and-tiptoe-path)) for the built-in counterparts − but they are enhanced by additional `tip` and `toe` (you have read the title, what did you expect??) arguments. 
+The functions `tiptoe.line()`, `tiptoe.curve()`, and `tiptoe.path()` act as a drop-in replacement (except that [they are placed by default](#difference-between-built-in-and-tiptoe-path)) for the built-in counterparts − but they are enhanced by additional `tip` and `toe` (you have read the title, what did you expect??) arguments. 
 
 Let us consider a simple example to start off. 
 ```typ
-#import "@preview/tiptoe:0.2.0": *
+#import "@preview/tiptoe:0.3.0": *
 
 #line(tip: stealth, toe: stealth.with(rev: true))
-#path(
+#curve(
   tip: triangle, toe: bar,
-  ((0pt, 0pt), (-10pt, 0pt)),
-  ((20pt, 10pt), (0pt, -10pt)),
-  (0pt, 20pt)
-)
+  std.curve.cubic((10pt, 0pt), (20pt, 0pt), (20pt, 10pt)),
+  std.curve.cubic(auto, none, (0pt, 20pt)),
+))
 ```
 <p align="center">
   <picture>
@@ -301,19 +300,35 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
 
 
 
-## Difference between built-in and tiptoe `path()`
+## Difference between built-in and tiptoe `curve`
 
 
-While the built-in [`path`][typst-path] function returns a block-level element with a size that measures from `(0pt, 0pt)` to the largest (positive) coordinate, the corresponding tiptoe function returns placed content (with zero-width and -height). 
+While the built-in [`curve`][typst-curve] function returns a block-level element with a size that measures from `(0pt, 0pt)` to the largest (positive) coordinate, the corresponding tiptoe function returns placed content (with zero-width and -height). 
 
 The reasons are
 - It is hard to measure the bounding box properly including the marks. 
 - The behavior of the built-in functions is not particularly useful since they measure only in the positive direction. I suspect that most packages using the drawing primitives wrap them with `place()` anyway. 
 
+Currently, there are some additional limitations that might be fixed in a future release. 
+- Values of type `relative` or `ratio` are not supported as coordinates in curve elements (to be precise, the `ratio` part is dismissed as of now). 
+- When using coordinates with `relative: true`, some edge cases might not work as expected. 
+- Tips are not supported on a `curve.close` element. 
+- Toes don't work when the curve starts with multiple subsequent `curve.move` elements. You should just merge them into one. 
+
+## Changelog
+
+### 0.3.0
+- Adds `curve` function in analogy to `std.curve`. 
+
+### 0.2.0 
+- Adds support for `relative` inputs for `line`. 
+
+### 0.1.0
+Initial release
 
 
 [fletcher]: https://github.com/Jollywatt/typst-fletcher
 [cetz]: https://github.com/cetz-package/cetz
 [jollywatt]: https://github.com/Jollywatt/
-[typst-path]: https://typst.app/docs/reference/visualize/path/
+[typst-curve]: https://typst.app/docs/reference/visualize/curve/
 [typst]: https://typst.app
