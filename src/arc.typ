@@ -13,7 +13,7 @@
   closed: false,
   tip: none, 
   toe: none,
-  shorten: 50%
+  shorten: 100%
 ) = {
   let coords = bezier-arc2(
     origin: origin,

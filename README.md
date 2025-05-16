@@ -280,7 +280,7 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
   closed: false,       // false, "segment" or "sector"
   tip: none,           // Mark placed at the start 
   toe: none,           // Mark placed at the toe
-  shorten: 50%         // Path shortening
+  shorten: 100%         // Path shortening
 )
 ```
 
