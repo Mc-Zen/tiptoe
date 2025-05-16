@@ -19,6 +19,8 @@
     assert-mark(toe, kind: "toe")
     toe = toe(line: stroke) 
   }
+  set place(left)
+
   context box({
     let end = end
     let start = start

@@ -219,6 +219,8 @@
     assert(false, message: "Unexpected named argument \"" + segments.named().keys().first() + "\"")
   }
 
+  set place(left)
+
   stroke = std.stroke(stroke)
 
   assert(
