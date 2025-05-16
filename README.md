@@ -8,7 +8,7 @@
 
 _Arrows for [Typst][typst] paths and other stories._
 
-[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.0%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.1%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
 [![Test Status](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml/badge.svg)](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Mc-Zen/tiptoe/blob/main/LICENSE)
 
@@ -31,7 +31,7 @@ The functions `tiptoe.line()`, `tiptoe.curve()`, and `tiptoe.path()` act as a dr
 
 Let us consider a simple example to start off. 
 ```typ
-#import "@preview/tiptoe:0.3.0": *
+#import "@preview/tiptoe:0.3.1": *
 
 #line(tip: stealth, toe: stealth.with(rev: true))
 #curve(
@@ -88,8 +88,8 @@ All predefined marks can be configured through `.with()` calls. Some options (li
 The size of most arrows is primarily defined by their length and secondarily by their width (exceptions are `bar`, `barb`, `hooks`, and `tikz` which only have a width). Both width and length can be set using
 - a `length` value, such as `10pt`, 
 - or a ratio which is measured relative to the thickness of the line (e.g., `500%` corresponds to 5 times the line thickness),
-- or a combination of both, e.g., `3pt + 450%` (this is btw. the default for the `stealth` mark). 
-This makes it possible to fine-tune the sizing behavior of a mark. By default (`width: auto`), for most marks the width is defined in terms of the length via some predefined ratio. 
+- or a combination of both, e.g., `3pt + 450%` (this is by the way the default for the `stealth` mark). 
+This makes it possible to fine-tune the sizing behavior of a mark. By default (`width: auto`) and for most marks the width is defined in terms of the length via some predefined ratio. 
 
 
 With the predefined marks, the length/width encompasses the *full* length/width of the mark, independent of the stroke thickness that is used. This is demonstrated below, where the fill is removed through `stealth.with(fill: none)`. 
@@ -138,7 +138,7 @@ The figure below shows the additional parameters that each mark supports. The re
 
 ## Mark alignment
 
-Most marks are aligned such that they point _right onto the end_ (or start) of the path. However, for some marks it is more desirable to have them _centered_ at the end (or start). This is for example the case for the `square` and `circle` marker. All markers that are by default centered on the path end have an `align` parameter that can be set to `center` or `end` to configure this behavior. 
+Most marks are aligned such that they point _right onto the end_ (or start) of the path. However, for some marks it is more desirable to have them _centered_ at the end (or start). This is for example the case for the `square` and `circle` marker. All markers that are by default centered on the path end have an `align` parameter that can be set either to `center` or `end` to configure this behavior. 
 
 The mark alignment for the built-in marks is summarized in the table below. 
 
@@ -158,7 +158,7 @@ In order to make room for the mark, the path needs to be shortened by some amoun
 
 The issue is demonstrated in the figure below. In all cases, the arrow is tangent to the curve at its end. In the left panel of the figure, the curve does not enter the arrow in the middle but rather from the side which definitely wouldn't make you look like a good designer when handing in professional work ;) 
 
-To compensate this issue, the path is _transformed_, i.e., shortened by some amount to make it seem nicer. This happens at the cost of the path being not quite the same, but it yields a much prettier result. 
+To compensate this issue, the path is _transformed_, i.e., shortened by some amount to make it seem nicer. This happens at the cost of the path being not quite the same as before; but it yields a much prettier result. 
 
 
 <p align="center">
@@ -171,13 +171,13 @@ To compensate this issue, the path is _transformed_, i.e., shortened by some amo
 
 
 
-Not always is it desirable to shorten the path all the way (hey, a little asymmetry simply belongs in life). For this purpose, `path` has a parameter `shorten` which takes ratios between `0%` and `100%` (default). 
+Not always is it desirable to shorten the path all the way (hey, a little asymmetry simply belongs in life). For this purpose, `curve`, `path`, and `arc` have a parameter `shorten` which takes ratios between `0%` and `100%` (default). 
 
 
 
 ## Combining marks
 
-The function `combine()` makes it quite easy to combine multiple marks into a single new one. It accepts any number of marks and can even process combined marks recursively. 
+The function `combine()` makes it easy to combine multiple marks into a single new one. It accepts any number of marks and can even process combined marks recursively. 
 
 ```typ
 #line(tip: combine(bar, stealth))
@@ -192,7 +192,7 @@ The function `combine()` makes it quite easy to combine multiple marks into a si
 
 
 
-The combined marks are automatically lined up one after the other, always the next one where the previous one ended. In order to introduce or increase the space between two marks, you may use length values (like `10pt`) or even better ratios (which are measured relative to the line thickness). Negative values are allowed. 
+The combined marks are automatically lined up one after the other; always the next one where the previous one ended. In order to introduce or increase the space between two marks, you may use length values (like `10pt`) or even better ratios (which are measured relative to the line thickness of the curve). Negative values are allowed! 
 
 
 
@@ -317,11 +317,15 @@ Currently, there are some additional limitations that might be fixed in a future
 
 ## Changelog
 
+### 0.3.1
+- Fixed tiptoe for right-to-left text flow. 
+- Internally changed the implementation of `arc` to use `curve` instead of `path`. Consequently, the default of `arc.shorten` is now `100%` which looks better with the new implementation. 
+
 ### 0.3.0
-- Adds `curve` function in analogy to `std.curve`. 
+- Added `curve` function in analogy to `std.curve`. 
 
 ### 0.2.0 
-- Adds support for `relative` inputs for `line`. 
+- Added support for `relative` inputs for `line`. 
 
 ### 0.1.0
 Initial release
