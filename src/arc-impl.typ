@@ -97,7 +97,6 @@
   }
   let coords = (
     curve.move(points.at(0)),
-    // ..points.slice(1).map(curve.line)
     ..points.slice(1).chunks(3).map(x => curve.cubic(..x, relative: false))
   )
 

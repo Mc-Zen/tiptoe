@@ -1,5 +1,5 @@
-#import "arc-impl.typ": bezier-arc
-#import "path.typ": path
+#import "arc-impl.typ": bezier-arc2
+#import "curve.typ": curve
 
 #let arc(
   origin: (0pt, 0pt),
@@ -15,7 +15,7 @@
   toe: none,
   shorten: 50%
 ) = {
-  let coords = bezier-arc(
+  let coords = bezier-arc2(
     origin: origin,
     angle: angle,
     arc: arc,
@@ -23,18 +23,23 @@
     width: width,
     height: height,
   )
+
   if closed == "sector" {
-    coords.push(origin)
+    coords.push(std.curve.line(origin))
   }
   if closed in ("sector", "segment") {
+    coords.push(std.curve.close(mode: "straight"))
     closed = true
+  } else if closed == true {
+    coords.push(std.curve.close())
   }
-  path(
+
+  curve(
     stroke: stroke,
     tip: tip,
     toe: toe,
     shorten: shorten,
-    fill: fill, closed: closed,
+    fill: fill, 
     ..coords
   )
 

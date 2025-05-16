@@ -21,7 +21,7 @@
   angle: 0deg,
   arc: -360deg,
   stroke: red + 1mm, radius: 1.2cm, 
-  shorten: (start: 100%, end: 50%),
+  shorten: (start: 100%, end: 100%),
   tip: stealth,
   toe: bar.with(stroke: black),
 )
