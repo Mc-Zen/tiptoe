@@ -8,7 +8,7 @@
 
 _Arrows for [Typst][typst] paths and other stories._
 
-[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.1%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.2%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
 [![Test Status](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml/badge.svg)](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Mc-Zen/tiptoe/blob/main/LICENSE)
 
@@ -31,7 +31,7 @@ The functions `tiptoe.line()`, `tiptoe.curve()`, and `tiptoe.path()` act as a dr
 
 Let us consider a simple example to start off. 
 ```typ
-#import "@preview/tiptoe:0.3.1": *
+#import "@preview/tiptoe:0.3.2": *
 
 #line(tip: stealth, toe: stealth.with(rev: true))
 #curve(
@@ -316,6 +316,9 @@ Currently, there are some additional limitations that might be fixed in a future
 - Toes don't work when the curve starts with multiple subsequent `curve.move` elements. You should just merge them into one. 
 
 ## Changelog
+
+### 0.3.2
+- Added support for `ratio` and `relative` values in the start and end coordinates. 
 
 ### 0.3.1
 - Fixed tiptoe for right-to-left text flow. 
