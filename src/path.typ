@@ -85,7 +85,7 @@
       
       let mark-content = place(
         dx: outer.at(0), dy: outer.at(1), 
-        rotate(angle, mark.mark)
+        rotate(angle, mark.mark, reflow: false)
       )
       outer.at(0) -= calc.cos(angle) * mark.end * shorten
       outer.at(1) -= calc.sin(angle) * mark.end * shorten

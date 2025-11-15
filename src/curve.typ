@@ -178,7 +178,7 @@
   let angle = calc.atan2(dx, dy)
   let mark-content = place(
     dx: end.at(0), dy: end.at(1), 
-    rotate(angle, mark.mark)
+    rotate(angle, mark.mark, reflow: false)
   )
   end.at(0) -= calc.cos(angle) * mark.end * shorten
   end.at(1) -= calc.sin(angle) * mark.end * shorten
@@ -194,7 +194,7 @@
 
   let mark-content = place(
     dx: vertex0.at(0), dy: vertex0.at(1), 
-    rotate(angle, mark.mark)
+    rotate(angle, mark.mark, reflow: false)
   )
 
   vertex0.at(0) -= calc.cos(angle) * mark.end * shorten
