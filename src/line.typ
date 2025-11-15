@@ -60,13 +60,13 @@
   if tip != none {
     place(
       dx: end.at(0), dy: end.at(1), 
-      rotate(angle, tip.mark)
+      rotate(angle, tip.mark, reflow: false)
     )
   }
   if toe != none {
     place(
       dx: toe-pos.at(0), dy: toe-pos.at(1), 
-      rotate(angle, scale(x: -100%, toe.mark))
+      rotate(angle, scale(x: -100%, toe.mark), reflow: false)
     )
   }
   hide(original-line)
