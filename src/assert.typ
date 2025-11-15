@@ -4,7 +4,7 @@
 
 #let assert-dict-keys(dict, required: (), optional: ()) = {
   let keys = dict.keys()
-  
+
   for key in required {
     if key not in keys {
       assert(false, message: "")

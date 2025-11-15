@@ -11,7 +11,7 @@
   stroke: 1pt + black,
   fill: none,
   closed: false,
-  tip: none, 
+  tip: none,
   toe: none,
   shorten: 100%
 ) = {
@@ -39,7 +39,7 @@
     tip: tip,
     toe: toe,
     shorten: shorten,
-    fill: fill, 
+    fill: fill,
     ..coords
   )
 

@@ -19,18 +19,18 @@
 
   let is-vertex(v) = (type(v) == array and type(v.first()) != array) or v.len() == 1
   let extract-vertex(v) = {
-    if is-vertex(v) { 
+    if is-vertex(v) {
       if v.len() == 2 {v}
       else { v.first() }
     } else { v.first() }
   }
-  
+
   let curve-elements = ()
   let start-in = none
   let out = none
   for vertex in vertices {
     let v = extract-vertex(vertex)
-    
+
     if is-vertex(vertex) {
       if out == none {
         curve-elements.push((v,))
@@ -69,7 +69,7 @@
     }
     curve-elements.push(curve.close(mode: "straight"))
   }
-  
+
   std.curve(
     curve.move(start),
     fill: fill, stroke: stroke,
