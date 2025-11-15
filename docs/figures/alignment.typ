@@ -28,7 +28,7 @@
   for (i, tip) in tips.enumerate() {
     place(dx: da - len, dy: y0 + i * dy, line(tip: tip))
   }
-  
+
   let tips = (
     square, circle, diamond, bar, rays
   )
@@ -36,7 +36,7 @@
   for (i, tip) in tips.enumerate() {
     place(dx: 2*da - len, dy: y0 + i * dy, line(tip: tip))
   }
-  
+
   let tips = (
     square.with(align: end), circle.with(align: end), diamond.with(align: end), bar.with(align: end), rays.with(align: end),
   )
@@ -44,7 +44,7 @@
   for (i, tip) in tips.enumerate() {
     place(dx: 3*da - len, dy: y0 + i * dy, line(tip: tip))
   }
-  
+
 }))
 
 #content

@@ -94,7 +94,7 @@
   tip: tiptoe.combine(
     tiptoe.bar.with(width: 1000%),
     tiptoe.stealth
-  ), 
+  ),
   toe: tiptoe.combine(
     tiptoe.bar.with(width: 1000%),
     tiptoe.stealth

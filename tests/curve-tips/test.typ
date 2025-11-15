@@ -2,8 +2,8 @@
 #set page(width: auto, height: auto, margin: 10pt)
 
 #set table(
-  stroke: none, 
-  columns: (auto, 2cm), 
+  stroke: none,
+  columns: (auto, 2cm),
   rows: 20pt,
 )
 
@@ -54,7 +54,7 @@
 #pagebreak()
 
 
-== Quad 
+== Quad
 
 #table(
 [Normal],
@@ -94,37 +94,37 @@
   [With `control: auto` and nothing before],
   curve(
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
   [With `control: auto` and `curve.line` before],
   curve(
     std.curve.line((10pt, 0pt)),
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
   [With `control: auto` and `curve.quad` before],
   curve(
     std.curve.quad((10pt, 0pt), (20pt, 0pt)),
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
   [With `control: auto` and `curve.quad` before but with `control: none`],
   curve(
     std.curve.quad(none, (20pt, 0pt)),
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
   [With `control: auto` and `curve.cubic` before],
   curve(
     std.curve.cubic(none, (10pt, 0pt), (20pt, 0pt)),
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
   [With `control: auto` and `curve.cubic` before but with `control: none`],
   curve(
     std.curve.cubic(none, none, (20pt, 0pt)),
     std.curve.quad(auto, (20pt, 10pt)),
-    tip: stealth, 
+    tip: stealth,
   ),
 )
 
@@ -132,8 +132,8 @@
 #pagebreak()
 
 
-== Cubic 
-  
+== Cubic
+
 #table(
   [Normal],
   curve(
@@ -164,7 +164,7 @@
   ),
   [With `control-start: auto` and `control-end: none` and `curve.line` before],
   curve(
-    tip: triangle, 
+    tip: triangle,
     std.curve.cubic(none, (0pt, 10pt), (20pt, 0pt)),
     std.curve.cubic(auto, (none), (20pt, 10pt))
   ),
