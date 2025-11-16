@@ -24,7 +24,7 @@
 
   show figure: box.with(stroke: .5pt + stroke-color, radius: .5em, inset: 1em)
 
-  set text(foreground, font: "Calibri", weight: 400)
+  set text(foreground, font: "Liberation Sans")
 
 
   body
