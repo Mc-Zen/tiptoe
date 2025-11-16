@@ -15,19 +15,19 @@
 
 
 // When encountering a final curve element with an `auto` control,
-// we can use this function to compute this control based on the 
-// previous curve element. 
+// we can use this function to compute this control based on the
+// previous curve element.
 #let get-prev-mirrored-control(segments) = {
   let p = segments.at(-2, default: std.curve.move((0pt, 0pt)))
   if p.func() == std.curve.close { p = std.curve.move((0pt, 0pt)) }
-  
+
   if p.func() == std.curve.move { p.start }
   else if p.func() == std.curve.line { p.end }
-  else if p.func() == std.curve.quad { 
+  else if p.func() == std.curve.quad {
     if p.control == none {p.end}
     else { mirror(p.control, p.end) }
   }
-  else if p.func() == std.curve.cubic { 
+  else if p.func() == std.curve.cubic {
     if p.control-end == none {p.end}
     else { mirror(p.control-end, p.end) }
   }
@@ -59,7 +59,7 @@
     }
   }
   let polygon = (base, )
-  
+
   for (i, segment) in segments.enumerate().slice(index-last-absolute-segment + 1) {
     if segment.func() == std.curve.line {
       base = add(base, segment.end)
@@ -78,7 +78,7 @@
       base = add(base, segment.end)
       polygon.push(base)
     }
-    
+
   }
   polygon
 }
@@ -163,7 +163,7 @@
   let final-segment = segments.last()
   let args = (:)
   let end = final-segment.end
-  
+
   if is-relative(final-segment) {
     if final-segment.has("relative") {
       args.relative = true
@@ -177,7 +177,7 @@
   let dy = (end.at(1) - inner.at(1)).length.to-absolute() / 1pt
   let angle = calc.atan2(dx, dy)
   let mark-content = place(
-    dx: end.at(0), dy: end.at(1), 
+    dx: end.at(0), dy: end.at(1),
     rotate(angle, mark.mark, reflow: false)
   )
   end.at(0) -= calc.cos(angle) * mark.end * shorten
@@ -193,13 +193,13 @@
   let angle = calc.atan2(dx, dy)
 
   let mark-content = place(
-    dx: vertex0.at(0), dy: vertex0.at(1), 
+    dx: vertex0.at(0), dy: vertex0.at(1),
     rotate(angle, mark.mark, reflow: false)
   )
 
   vertex0.at(0) -= calc.cos(angle) * mark.end * shorten
   vertex0.at(1) -= calc.sin(angle) * mark.end * shorten
-  
+
   (mark-content, vertex0)
 }
 
@@ -207,7 +207,7 @@
 
 
 #let curve(
-  ..segments, 
+  ..segments,
   fill: none,
   fill-rule: auto,
   stroke: 1pt,
@@ -224,14 +224,14 @@
   stroke = std.stroke(stroke)
 
   assert(
-    type(shorten) in (ratio, dictionary), 
+    type(shorten) in (ratio, dictionary),
     message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten))
   )
   if type(shorten) == ratio {
     shorten = (start: shorten, end: shorten)
   } else if type(shorten) == dictionary {
     assert(
-      shorten.keys().sorted() == ("end", "start"), 
+      shorten.keys().sorted() == ("end", "start"),
       message: "Unexpected key, valid keys are \"start\" and \"end\""
     )
   }
@@ -241,15 +241,15 @@
     let segments = segments.pos()
     let marks
 
-    if toe != none and segments.len() >= 1 { 
+    if toe != none and segments.len() >= 1 {
 
       assert-mark(toe, kind: "toe")
       let toe = toe(line: stroke)
-      let first-segment = segments.first() 
-      
+      let first-segment = segments.first()
+
       if first-segment.func() == std.curve.move and segments.len() >= 2 {
 
-        let vertex0 = first-segment.start 
+        let vertex0 = first-segment.start
         let relative = is-relative(segments.at(1))
 
         // Obtain next vertex: either an end point or the next control point
@@ -265,8 +265,8 @@
             if relative {
               // We will change the first curve.move, so this second segment cannot be relative
               segments.at(1) = std.curve.quad(
-                add-if-array(se.control, vertex0), 
-                add(se.end, vertex0), 
+                add-if-array(se.control, vertex0),
+                add(se.end, vertex0),
                 relative: false
               )
             }
@@ -275,22 +275,22 @@
             if relative {
               // We will change the first curve.move, so this second segment cannot be relative
               segments.at(1) = std.curve.cubic(
-                add-if-array(se.control-start, vertex0), 
-                add-if-array(se.control-end, vertex0), 
-                add(se.end, vertex0), 
+                add-if-array(se.control-start, vertex0),
+                add-if-array(se.control-end, vertex0),
+                add(se.end, vertex0),
                 relative: false
               )
             }
             first-not-none-or-auto(se.control-start, se.control-end, se.end)
           }
         }
-        
+
         if relative {
           vertex1 = add(vertex0, vertex1)
         }
-        
+
         let (mark, new-vertex0) = treat-toe(
-          toe, vertex0, vertex1, 
+          toe, vertex0, vertex1,
           shorten: shorten.start
         )
         marks += mark
@@ -299,7 +299,7 @@
       } else if first-segment.func() == std.curve.line {
 
         let (mark, new-vertex0) = treat-toe(
-          toe, (0pt, 0pt), first-segment.end, 
+          toe, (0pt, 0pt), first-segment.end,
           shorten: shorten.start
         )
         marks += mark
@@ -307,34 +307,34 @@
         segments.insert(0, std.curve.move(new-vertex0))
 
       } else if first-segment.func() == std.curve.quad {
-        
+
         let vertex1 = first-not-none-or-auto(first-segment.control, first-segment.end)
         let (mark, new-vertex0) = treat-toe(
-          toe, (0pt, 0pt), vertex1, 
+          toe, (0pt, 0pt), vertex1,
           shorten: shorten.start
         )
         marks += mark
         segments.first() = std.curve.quad(
-          first-segment.control, 
-          first-segment.end, 
+          first-segment.control,
+          first-segment.end,
           relative: false
         )
         segments.insert(0, std.curve.move(new-vertex0))
 
       } else if first-segment.func() == std.curve.cubic {
-        
+
         let vertex1 = first-not-none-or-auto(
           first-segment.control-start, first-segment.control-end, first-segment.end
         )
         let (mark, new-vertex0) = treat-toe(
-          toe, (0pt, 0pt), vertex1, 
+          toe, (0pt, 0pt), vertex1,
           shorten: shorten.start
         )
         marks += mark
         segments.first() = std.curve.cubic(
           first-segment.control-start,
-          first-segment.control-end, 
-          first-segment.end, 
+          first-segment.control-end,
+          first-segment.end,
           relative: false
         )
         segments.insert(0, std.curve.move(new-vertex0))
@@ -342,10 +342,10 @@
       }
 
     }
-    
 
 
-    if tip != none and segments.len() >= 1 { 
+
+    if tip != none and segments.len() >= 1 {
 
       assert-mark(tip, kind: "tip")
       let tip = tip(line: stroke)
@@ -365,15 +365,15 @@
       } else if final-segment.func() == std.curve.line {
 
         let (mark, new-vertex-n, args) = treat-tip(
-          tip, 
-          segments, vertex-n-1, 
+          tip,
+          segments, vertex-n-1,
           shorten: shorten.end
         )
         marks += mark
         segments.last() = std.curve.line(new-vertex-n, relative: false)
 
       } else if final-segment.func() == std.curve.quad {
-        
+
         if final-segment.control != none {
           if final-segment.control == auto {
             vertex-n-1 = get-prev-mirrored-control(segments)
@@ -383,8 +383,8 @@
         }
 
         let (mark, new-vertex-n, args) = treat-tip(
-          tip, 
-          segments, vertex-n-1, 
+          tip,
+          segments, vertex-n-1,
           shorten: shorten.end
         )
 
@@ -404,25 +404,25 @@
         }
 
         let (mark, new-vertex-n, args) = treat-tip(
-          tip, 
-          segments, vertex-n-1, 
+          tip,
+          segments, vertex-n-1,
           shorten: shorten.end
         )
 
         marks += mark
         segments.last() = std.curve.cubic(
-          final-segment.control-start, 
-          final-segment.control-end, 
+          final-segment.control-start,
+          final-segment.control-end,
           new-vertex-n, relative: false
         )
 
       }
     }
-    
+
     place(std.curve(
-      ..segments, 
-      stroke: stroke, 
-      fill: fill, 
+      ..segments,
+      stroke: stroke,
+      fill: fill,
       fill-rule: utility.if-auto(fill-rule, std.curve.fill-rule)
     )) + marks
   }

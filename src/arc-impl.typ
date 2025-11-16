@@ -9,7 +9,7 @@
   width: auto,
   height: auto
 ) = {
-  
+
   if arc == 0deg { return () }
   if width == auto { width = 2 * radius }
   if height == auto { height = 2 * radius }
@@ -61,7 +61,7 @@
   width: auto,
   height: auto
 ) = {
-  
+
   if arc == 0deg { return () }
   if width == auto { width = 2 * radius }
   if height == auto { height = 2 * radius }
@@ -115,7 +115,7 @@
     stroke: stroke,
     ..bezier-arc2(
       origin: origin,
-      angle: angle, 
+      angle: angle,
       arc: arc,
       radius: radius
     )

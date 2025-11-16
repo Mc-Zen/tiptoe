@@ -2,8 +2,8 @@
 #set page(width: auto, height: auto, margin: 10pt)
 
 #set table(
-  stroke: none, 
-  columns: (auto, 2cm), 
+  stroke: none,
+  columns: (auto, 2cm),
   rows: 20pt,
 )
 
@@ -154,7 +154,7 @@
 #pagebreak()
 
 
-== Line 
+== Line
 
 #table(
   [Normal],

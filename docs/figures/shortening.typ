@@ -9,7 +9,7 @@
   place(dx: 80pt, [`shorten: 100%`])
   place(dx: 160pt, [`shorten: 70%`])
   place(dx: 10pt, dy: 20pt, {
-      
+
     place(path(
       ..coords,
       stroke: red-stroke
@@ -22,7 +22,7 @@
     place(line(start: (25pt, 15pt), length: 20pt, angle: 90deg, tip: stealth, stroke: .5pt + foreground))
     place(line(start: (80pt + 25pt, 15pt), length: 20pt, angle: 90deg, tip: stealth, stroke: .5pt + foreground))
     place(line(start: (160pt + 25pt, 15pt), length: 20pt, angle: 90deg, tip: stealth, stroke: .5pt + foreground))
-    
+
     place(dx: 80pt, path(
       ..coords,
       stroke: red-stroke
@@ -34,9 +34,9 @@
     place(dx: 80pt, dy: 30pt, path(
       ..coords,
       stroke: stroke,
-      tip: stealth, 
+      tip: stealth,
     ))
-    
+
     place(dx: 160pt, path(
       ..coords,
       stroke: red-stroke

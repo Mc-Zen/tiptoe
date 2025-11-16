@@ -5,7 +5,7 @@
 
 #let bar(
   width: 2.4pt + 360%,
-  stroke: auto, 
+  stroke: auto,
   align: center,
   line: stroke()
 ) = {
@@ -13,7 +13,7 @@
   let (width,) = utility.process-dims(
     line, width: width,
   )
-  
+
   assert(align in (center, end))
   let offset = if align == end { stroke.thickness / 2 } else { 0pt }
 
@@ -31,7 +31,7 @@
 #let bracket(
   width: 2.4pt + 360%,
   length: auto,
-  stroke: auto, 
+  stroke: auto,
   rev: false,
   line: stroke()
 ) = {
@@ -75,7 +75,7 @@
     line, length: length, width: width,
     default-ratio: .8
   )
-  
+
   let linewidth = stroke.thickness
   let Δl = length * inset
   let dhalf = 0.5 * width
@@ -85,10 +85,10 @@
     // very common optimization for filled arrows
     polygon(
       (0pt, 0pt),
-      (-length, dhalf), 
-      (-length + Δl, 0pt), 
-      (-length, -dhalf), 
-      stroke: none, 
+      (-length, dhalf),
+      (-length + Δl, 0pt),
+      (-length, -dhalf),
+      stroke: none,
       fill: utility.if-auto(stroke.paint, black)
     )
     tip-length = length / 2
@@ -97,7 +97,7 @@
     let α = calc.atan(tanα)
     let sinα  = calc.sin(α)
     let x3 = 0.5 * linewidth / sinα
-    
+
     let (x, x4, y) = if inset == 0% {
       let x = length - linewidth/2
       (x, x, tanα * (x - x3))
@@ -114,22 +114,22 @@
     }
     tip-length = x3
     polygon(
-      (-x3, 0pt), 
-      (-x, y), 
-      (-x4, 0pt), 
-      (-x, -y), 
+      (-x3, 0pt),
+      (-x, y),
+      (-x4, 0pt),
+      (-x, -y),
       stroke: std.stroke(
-        thickness: linewidth, 
-        paint: utility.if-auto(stroke.paint, black), 
+        thickness: linewidth,
+        paint: utility.if-auto(stroke.paint, black),
         dash: stroke.dash,
-        miter-limit: 7, 
+        miter-limit: 7,
         join: "miter"
-      ), 
+      ),
       fill: utility.chained-if-auto(fill, stroke.paint, black)
     )
   }
 
-  
+
   let mark = place(path)
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
@@ -173,16 +173,16 @@
     (-length + s, -0.5 * width + s),
     fill: utility.chained-if-auto(fill, stroke.paint, black),
     stroke: std.stroke(
-      thickness: stroke.thickness, 
-      paint: utility.if-auto(stroke.paint, black), 
+      thickness: stroke.thickness,
+      paint: utility.if-auto(stroke.paint, black),
       dash: stroke.dash,
-      miter-limit: 7, 
+      miter-limit: 7,
       join: "round"
     )
   ))
-  
+
   let end = length - inset - s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
     end = length - s
@@ -217,15 +217,15 @@
     curve.line((-tip-length, 0pt), relative: false),
     curve.line((-length + s, -0.5 * width + s), relative: false),
     stroke: std.stroke(
-      thickness: stroke.thickness, 
-      paint: utility.if-auto(stroke.paint, black), 
+      thickness: stroke.thickness,
+      paint: utility.if-auto(stroke.paint, black),
       dash: stroke.dash,
-      miter-limit: 7, 
+      miter-limit: 7,
       cap: "round"
     )
   ))
 
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
   }
@@ -237,13 +237,13 @@
 }
 
 #let diamond(
-  length: 565.69%, 
+  length: 565.69%,
   width: auto,
   fill: auto,
   stroke: auto,
   align: center,
   line: stroke()
-) = { 
+) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
     line, length: length, width: width,
@@ -251,7 +251,7 @@
   )
   let dhalf = 0.5 * width
   let tip-length
-  
+
   let tanα = dhalf / length * 2
   let α = calc.atan(tanα)
   let tip-length = 0.5 * stroke.thickness / calc.sin(α)
@@ -268,7 +268,7 @@
     stroke: stroke,
     fill: utility.chained-if-auto(fill, stroke.paint, black)
   ))
-  
+
   (
     mark: mark,
     end: length - tip-length - offset
@@ -298,13 +298,13 @@
       (-length + s, y),
       (-length + s, -y),
       (-s, -y),
-      stroke: stroke, 
+      stroke: stroke,
       fill: utility.chained-if-auto(fill, stroke.paint, black),
     )
   )
 
   (
-    mark: mark, 
+    mark: mark,
     end: length - s - offset
   )
 }
@@ -326,21 +326,21 @@
   )
   let s = stroke.thickness / 2
   let y = width / 2 - s
-  
+
   assert(align in (center, end))
   let offset = if align == center { length / 2 } else { 0pt }
-  
+
   let mark = place(dx: -length + s + offset, dy: -y,
     ellipse(
       width: length - 2 * s,
       height: width - 2 * s,
-      stroke: stroke, 
+      stroke: stroke,
       fill: utility.chained-if-auto(fill, stroke.paint, black),
     )
   )
 
   (
-    mark: mark, 
+    mark: mark,
     end: length - s - offset
   )
 }
@@ -362,7 +362,7 @@
     if n == 4 { phase = 45deg }
     else { phase = -90deg }
   }
-  
+
   assert(align in (center, end))
   let offset = if align == end { -length } else { 0pt }
 
@@ -403,7 +403,7 @@
     )
   )
   let end = s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: width / 2))
     end = radius
@@ -452,7 +452,7 @@
     )
   }
   let end = r - s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: r + s))
     end = 0pt
@@ -477,7 +477,7 @@
   let (width,) = utility.process-dims(
     line, width: width
   )
-  
+
   let s = stroke.thickness / 2
   stroke = if sharp {
     (thickness: stroke.thickness, paint: stroke.paint, join: "bevel", cap: "butt")
@@ -489,21 +489,21 @@
     curve(
       curve.move((-width * 0.42, -width / 2 + s)),
       curve.cubic(
-        (-width * 0.32, -width * 0.1 + s), 
-        none, 
+        (-width * 0.32, -width * 0.1 + s),
+        none,
         (x0, 0pt),
         relative: false
       ),
       curve.cubic(
-        none, 
-        (-width * 0.32, width * 0.1 - s), 
+        none,
+        (-width * 0.32, width * 0.1 - s),
         (-width * 0.42, width / 2 - s),
         relative: false
       ),
       stroke: stroke
     )
   )
-  
+
   (
     mark: mark,
     end: stroke.thickness
@@ -512,12 +512,12 @@
 
 
 #let combine(
-  line: stroke(), 
+  line: stroke(),
   ..marks
 ) = (line: stroke()) => {
   let marks = marks.pos()
   let linewidth = utility.if-auto(line.thickness, 1pt)
-  
+
   let combined-mark
   let pos = 0pt
   let end
@@ -540,7 +540,7 @@
   }
 
   (
-    mark: combined-mark, 
+    mark: combined-mark,
     end: end
   )
 }
