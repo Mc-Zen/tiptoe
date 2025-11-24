@@ -302,7 +302,7 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
 On top, tiptoe provides a ring function. 
 
 ```typ
-#let arc(
+#let ring(
   origin: (0pt, 0pt),  // Origin coordinates
   angle: 0deg,         // Start angle
   arc: 45deg,          // Arc angle
