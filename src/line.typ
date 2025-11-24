@@ -20,10 +20,21 @@
   end: none,
   length: 30pt, 
   angle: 0deg, 
-  stroke: 1pt,
   tip: none,
   toe: none
 ) = box({
+  
+  let stroke = std.stroke(line.stroke)
+
+  if tip != none { 
+    assert-mark(tip, kind: "tip")
+    tip = tip(line: stroke) 
+  }
+  if toe != none { 
+    assert-mark(toe, kind: "toe")
+    toe = toe(line: stroke) 
+  }
+
 
   if end == none {
     // using length and angle
@@ -79,27 +90,19 @@
   end: none,
   length: 30pt, 
   angle: 0deg, 
-  stroke: 1pt,
+  stroke: auto,
   tip: none,
   toe: none
 ) = {
-  stroke = std.stroke(stroke)
-  if tip != none { 
-    assert-mark(tip, kind: "tip")
-    tip = tip(line: stroke) 
-  }
-  if toe != none { 
-    assert-mark(toe, kind: "toe")
-    toe = toe(line: stroke) 
-  }
+
   set place(left)
+  set std.line(stroke: stroke) if stroke != auto
 
   let line-impl = line-impl.with(
     start: start,
     end: end,
     length: length,
     angle: angle,
-    stroke: stroke,
     tip: tip,
     toe: toe
   )
@@ -107,7 +110,7 @@
   if end != none and (start + end).map(type).any(x => x in (ratio, relative)) {
 
     context layout(size => line-impl(
-        start:resolve-relative(..start, size) ,
+        start: resolve-relative(..start, size) ,
         end: resolve-relative(..end, size)
       )
     )
