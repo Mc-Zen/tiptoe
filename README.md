@@ -14,7 +14,7 @@ _Arrows for [Typst][typst] paths and other stories._
 
 ---
 
-*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `curve()`, and `path()`. Moreover, it adds the geometric primitive `arc()`. 
+*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `curve()`, and `path()`. Moreover, it adds the geometric primitives `arc()` and `ring`. 
 
 - [Tiptoe vs. Fletcher](#tiptoe-vs-fletcher)
 - [Available marks](#available-marks)
@@ -24,6 +24,7 @@ _Arrows for [Typst][typst] paths and other stories._
 - [Combining marks](#combining-marks)
 - [Defining custom marks](#defining-custom-marks)
 - [Arc](#arc)
+- [Ring](#ring)
 - [Difference between built in and tiptoe curve](#difference-between-built-in-and-tiptoe-curve)
 
 
@@ -275,8 +276,8 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
   radius: 1cm,         // The radius of the full circle
   width: auto,         // The width of the full ellipse
   height: auto,        // The height of the full ellipse
-  stroke: 1pt + black,
-  fill: none,
+  stroke: auto,        // Folds with `std.curve.stroke`
+  fill: auto,          // Folds with `std.curve.fill`
   closed: false,       // false, "segment" or "sector"
   tip: none,           // Mark placed at the start 
   toe: none,           // Mark placed at the toe
@@ -295,6 +296,22 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
 </p>
 
 
+
+## Ring
+
+On top, tiptoe provides a ring function. 
+
+```typ
+#let arc(
+  origin: (0pt, 0pt),  // Origin coordinates
+  angle: 0deg,         // Start angle
+  arc: 45deg,          // Arc angle
+  inner: 0.5cm,        // The inner radius of the full circle
+  outer: 1cm,          // The outer radius of the full circle
+  stroke: auto,        // Folds with `std.curve.stroke`
+  fill: auto,          // Folds with `std.curve.fill`
+)
+```
 
 
 

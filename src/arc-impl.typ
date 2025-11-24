@@ -59,7 +59,8 @@
   arc: 45deg,
   radius: 1cm,
   width: auto,
-  height: auto
+  height: auto,
+  move: true
 ) = {
   
   if arc == 0deg { return () }
@@ -95,10 +96,12 @@
       ))
     }
   }
-  let coords = (
-    curve.move(points.at(0)),
-    ..points.slice(1).chunks(3).map(x => curve.cubic(..x, relative: false))
-  )
+  let coords = if move {
+    (curve.move(points.at(0)),)
+  } else {
+    (curve.line(points.at(0)),)
+  }
+  coords += points.slice(1).chunks(3).map(x => curve.cubic(..x, relative: false))
 
   coords
 }
