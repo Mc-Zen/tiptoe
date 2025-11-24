@@ -23,7 +23,7 @@ jobs:
           tool: tytanic@0.3.0
 
       - name: Run test suite
-        run: tt run --no-fail-fast
+        run: tt run --no-fail-fast --font-path ./fonts
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
