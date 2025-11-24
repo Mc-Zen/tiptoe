@@ -208,9 +208,9 @@
 
 #let curve(
   ..segments, 
-  fill: none,
+  fill: auto,
   fill-rule: auto,
-  stroke: 1pt,
+  stroke: auto,
   tip: none,
   toe: none,
   shorten: 100%,
@@ -220,8 +220,10 @@
   }
 
   set place(left)
+  set std.curve(fill: fill) if fill != auto
+  set std.curve(stroke: stroke) if stroke != auto
+  set std.curve(fill-rule: fill-rule) if fill-rule != auto
 
-  stroke = std.stroke(stroke)
 
   assert(
     type(shorten) in (ratio, dictionary), 
@@ -238,9 +240,16 @@
 
 
   context {
-    let segments = segments.pos()
-    let marks
+    let stroke = std.curve.stroke
+    if stroke == auto {
+      stroke = std.stroke()
+    } else {
+      stroke = std.stroke(stroke)
+    }
 
+    let segments = segments.pos()
+
+    let marks
     if toe != none and segments.len() >= 1 { 
 
       assert-mark(toe, kind: "toe")
@@ -419,11 +428,6 @@
       }
     }
     
-    place(std.curve(
-      ..segments, 
-      stroke: stroke, 
-      fill: fill, 
-      fill-rule: utility.if-auto(fill-rule, std.curve.fill-rule)
-    )) + marks
+    place(std.curve(..segments)) + marks
   }
 }
