@@ -2,7 +2,7 @@
 #set page(width: auto, height: auto, margin: 10pt)
 
 
-
+#set std.curve(stroke: black)
 
 #box(height: 1.55cm, width: 1.1cm, 
   arc(origin: (0pt, 30pt), angle: -90deg, arc: 120deg, fill: red)
