@@ -299,7 +299,7 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
 
 ## Ring
 
-On top, tiptoe provides a ring function. 
+On top, Tiptoe provides a ring function. 
 
 ```typ
 #let ring(
