@@ -8,13 +8,13 @@
 
 _Arrows for [Typst][typst] paths and other stories._
 
-[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.3.2%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
+[![Typst Package](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMc-Zen%2Ftiptoe%2Fv0.4.0%2Ftypst.toml&query=%24.package.version&prefix=v&logo=typst&label=package&color=239DAD)](https://typst.app/universe/package/tiptoe)
 [![Test Status](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml/badge.svg)](https://github.com/Mc-Zen/tiptoe/actions/workflows/run_tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Mc-Zen/tiptoe/blob/main/LICENSE)
 
 ---
 
-*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `curve()`, and `path()`. Moreover, it adds the geometric primitives `arc()` and `ring`. 
+*Tiptoe* adds configurable arrow tips (and toes) to the functions `line()` and `curve()`, and `path()`. Moreover, it adds the geometric primitives `arc()` and `ring()`. 
 
 - [Tiptoe vs. Fletcher](#tiptoe-vs-fletcher)
 - [Available marks](#available-marks)
@@ -25,14 +25,14 @@ _Arrows for [Typst][typst] paths and other stories._
 - [Defining custom marks](#defining-custom-marks)
 - [Arc](#arc)
 - [Ring](#ring)
-- [Difference between built in and tiptoe curve](#difference-between-built-in-and-tiptoe-curve)
+- [Differences between `std.curve` and `tiptoe.curve`](#differences-between-stdcurve-and-tiptoecurve)
 
 
-The functions `tiptoe.line()`, `tiptoe.curve()`, and `tiptoe.path()` act as a drop-in replacement (except that [they are placed by default](#difference-between-built-in-and-tiptoe-path)) for the built-in counterparts − but they are enhanced by additional `tip` and `toe` (you have read the title, what did you expect??) arguments. 
+The functions `tiptoe.line()`, `tiptoe.curve()`, and `tiptoe.path()` act as a drop-in replacement (except that [they are placed by default](#difference-between-built-in-and-tiptoe-path)) for their counterparts in the Typst standard library − but they are enhanced by additional `tip` and `toe` (you have read the title, what did you expect??) arguments. 
 
 Let us consider a simple example to start off. 
 ```typ
-#import "@preview/tiptoe:0.3.2": *
+#import "@preview/tiptoe:0.4.0": *
 
 #line(tip: stealth, toe: stealth.with(rev: true))
 #curve(
@@ -51,7 +51,7 @@ Let us consider a simple example to start off.
 
 
 
-## Tiptoe vs. [Fletcher][fletcher]
+## Tiptoe vs. Fletcher
 
 _Before going into the details:_ There exists another awesome package that provides great support for arrows and marks: [Fletcher][fletcher] by [Jollywatt][jollywatt]. If you wonder which package to use, the decision is easy because their use-cases are almost complementary. 
 - Fletcher works with (and needs) [CeTZ][cetz] while
@@ -178,7 +178,7 @@ Not always is it desirable to shorten the path all the way (hey, a little asymme
 
 ## Combining marks
 
-The function `combine()` makes it easy to combine multiple marks into a single new one. It accepts any number of marks and can even process combined marks recursively. 
+The function `combine()` makes it easy to combine multiple marks into a single new one and acts as a mark itself. It accepts any number of marks and can even process combined marks recursively. 
 
 ```typ
 #line(tip: combine(bar, stealth))
@@ -193,7 +193,7 @@ The function `combine()` makes it easy to combine multiple marks into a single n
 
 
 
-The combined marks are automatically lined up one after the other; always the next one where the previous one ended. In order to introduce or increase the space between two marks, you may use length values (like `10pt`) or even better ratios (which are measured relative to the line thickness of the curve). Negative values are allowed! 
+The combined marks are automatically lined up one after the other; always the next one where the previous one ended. In order to introduce or increase space between two marks, you may use `length` values (like `10pt`) or even better `ratio` values (which are measured relative to the line thickness of the curve). Negative values are also allowed! 
 
 
 
@@ -276,12 +276,12 @@ Until a built-in arc function makes it into the core of Typst, enjoy this one:
   radius: 1cm,         // The radius of the full circle
   width: auto,         // The width of the full ellipse
   height: auto,        // The height of the full ellipse
-  stroke: auto,        // Folds with `std.curve.stroke`
-  fill: auto,          // Folds with `std.curve.fill`
   closed: false,       // false, "segment" or "sector"
   tip: none,           // Mark placed at the start 
   toe: none,           // Mark placed at the toe
-  shorten: 100%         // Path shortening
+  shorten: 100%,       // Path shortening
+  stroke: auto,        // Folds with `std.curve.stroke`
+  fill: auto,          // Folds with `std.curve.fill`
 )
 ```
 
@@ -324,22 +324,28 @@ On top, Tiptoe provides a ring function.
 
 
 
-## Difference between built-in and tiptoe `curve`
+## Differences between `std.curve` and `tiptoe.curve`
 
 
-While the built-in [`curve`][typst-curve] function returns a block-level element with a size that measures from `(0pt, 0pt)` to the largest (positive) coordinate, the corresponding tiptoe function returns placed content (with zero-width and -height). 
+While the built-in [`std.curve`][typst-curve] function returns a block-level element with a size that measures from `(0pt, 0pt)` to the largest (positive) coordinate, the corresponding Tiptoe function returns placed content (with zero-width and -height). 
 
 The reasons are
 - It is hard to measure the bounding box properly including the marks. 
 - The behavior of the built-in functions is not particularly useful since they measure only in the positive direction. I suspect that most packages using the drawing primitives wrap them with `place()` anyway. 
 
-Currently, there are some additional limitations that might be fixed in a future release. 
+Currently, there are some additional limitations that might be lifted in a future release. 
 - Values of type `relative` or `ratio` are not supported as coordinates in curve elements (to be precise, the `ratio` part is dismissed as of now). 
 - When using coordinates with `relative: true`, some edge cases might not work as expected. 
 - Tips are not supported on a `curve.close` element. 
 - Toes don't work when the curve starts with multiple subsequent `curve.move` elements. You should just merge them into one. 
 
+
 ## Changelog
+
+### 0.4.0
+- Added a `ring()` function for drawing ring arcs. 
+- Fixed positioning of marks when `set rotate(reflow: true)` has been set (thanks to @Andrew15-5). 
+- The functions `line`, `curve`, `arc`, and `ring` now respond to set rules on `std.line` and `std.curve`. 
 
 ### 0.3.2
 - Added support for `ratio` and `relative` values in the start and end coordinates. 
