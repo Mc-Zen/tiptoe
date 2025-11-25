@@ -5,6 +5,6 @@ do
   name=${name%.*}
   out="$path/out/$name"
   echo "$name"
-  typst c "$entry" "$out.svg" --format svg --root .
-  typst c "$entry" "$out-dark.svg" --format svg --root . --input dark=true
+  typst c "$entry" "$out.svg" --format svg --root . --font-path ./fonts
+  typst c "$entry" "$out-dark.svg" --format svg --root . --input dark=true --font-path ./fonts
 done

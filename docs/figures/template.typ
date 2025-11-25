@@ -4,14 +4,14 @@
 #let foreground = if dark { white } else { black }
 #let background = if dark { black } else { white }
 
-#let line = line.with(stroke: foreground)
-#let path = path.with(stroke: foreground)
-#let arc = arc.with(stroke: foreground)
 
 
 #let template(
   body
 ) = {
+
+  set std.curve(stroke: foreground)
+  set std.line(stroke: foreground)
 
   let stroke-color = gray
   if dark {
