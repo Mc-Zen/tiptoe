@@ -314,6 +314,13 @@ On top, tiptoe provides a ring function.
 ```
 
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/20833072-faf4-44a4-800c-0aaad8f5787b">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/2bda5bc7-4441-46df-92b1-f65da85ebe00">
+    <img alt="Usage of the arc() primitive" src="https://github.com/user-attachments/assets/20833072-faf4-44a4-800c-0aaad8f5787b">
+  </picture>
+</p>
 
 
 
