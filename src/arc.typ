@@ -11,9 +11,9 @@
   stroke: auto,
   fill: auto,
   closed: false,
-  tip: none, 
+  tip: none,
   toe: none,
-  shorten: 100%
+  shorten: 100%,
 ) = {
   let coords = bezier-arc2(
     origin: origin,
@@ -39,8 +39,7 @@
     tip: tip,
     toe: toe,
     shorten: shorten,
-    fill: fill, 
-    ..coords
+    fill: fill,
+    ..coords,
   )
-
 }

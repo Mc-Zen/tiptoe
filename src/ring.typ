@@ -21,7 +21,7 @@
     angle: angle,
     arc: arc,
     radius: outer,
-    move: arc == 360deg
+    move: arc == 360deg,
   )
 
   if arc == 360deg {
@@ -31,10 +31,9 @@
 
   curve(
     stroke: stroke,
-    fill: fill, 
+    fill: fill,
     ..inner-coords,
     ..outer-coords,
-    (std.curve.close(mode: "straight"))
+    (std.curve.close(mode: "straight")),
   )
-
 }

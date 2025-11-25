@@ -2,8 +2,8 @@
 
 
 #let transform(a, b, mapper) = array.zip(a, b, exact: true).map(mapper)
-#let add(a, b) = transform(a, b, ((x,y)) => x + y)
-#let subtract(a, b) = transform(a, b, ((x,y)) => x - y)
+#let add(a, b) = transform(a, b, ((x, y)) => x + y)
+#let subtract(a, b) = transform(a, b, ((x, y)) => x - y)
 #let multiply(a, c) = a.map(x => x * c)
 
 #let path-to-curve(
@@ -11,7 +11,7 @@
   stroke: stroke(),
   fill: none,
   fill-rule: "even-odd",
-  closed: false
+  closed: false,
 ) = {
   // place(std.path(..vertices, stroke: stroke, fill: fill, closed: closed))
   vertices = vertices.pos()
@@ -19,18 +19,19 @@
 
   let is-vertex(v) = (type(v) == array and type(v.first()) != array) or v.len() == 1
   let extract-vertex(v) = {
-    if is-vertex(v) { 
-      if v.len() == 2 {v}
-      else { v.first() }
-    } else { v.first() }
+    if is-vertex(v) {
+      if v.len() == 2 { v } else { v.first() }
+    } else {
+      v.first()
+    }
   }
-  
+
   let curve-elements = ()
   let start-in = none
   let out = none
   for vertex in vertices {
     let v = extract-vertex(vertex)
-    
+
     if is-vertex(vertex) {
       if out == none {
         curve-elements.push((v,))
@@ -57,9 +58,9 @@
   }
 
   let to-curve-element(x) = {
-    if x.len() == 1 { curve.line(..x) }
-    else if x.len() == 2 { curve.quad(..x) }
-    else if x.len() == 3 { curve.cubic(..x) }
+    if x.len() == 1 { curve.line(..x) } else if x.len() == 2 { curve.quad(..x) } else if x.len() == 3 {
+      curve.cubic(..x)
+    }
   }
   curve-elements = curve-elements.map(to-curve-element)
   let start = extract-vertex(vertices.first())
@@ -69,12 +70,13 @@
     }
     curve-elements.push(curve.close(mode: "straight"))
   }
-  
+
   std.curve(
     curve.move(start),
-    fill: fill, stroke: stroke,
+    fill: fill,
+    stroke: stroke,
     ..curve-elements,
-    fill-rule: fill-rule
+    fill-rule: fill-rule,
     // stroke: yellow + .5pt
   )
 }

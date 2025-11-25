@@ -5,15 +5,16 @@
 
 #let bar(
   width: 2.4pt + 360%,
-  stroke: auto, 
+  stroke: auto,
   align: center,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width,) = utility.process-dims(
-    line, width: width,
+    line,
+    width: width,
   )
-  
+
   assert(align in (center, end))
   let offset = if align == end { stroke.thickness / 2 } else { 0pt }
 
@@ -21,9 +22,9 @@
     mark: place(std.line(
       start: (-offset, -width / 2),
       end: (-offset, width / 2),
-      stroke: stroke
+      stroke: stroke,
     )),
-    end: offset
+    end: offset,
   )
 }
 
@@ -31,14 +32,16 @@
 #let bracket(
   width: 2.4pt + 360%,
   length: auto,
-  stroke: auto, 
+  stroke: auto,
   rev: false,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: width, width: length,
-    default-ratio: .3
+    line,
+    length: width,
+    width: length,
+    default-ratio: .3,
   )
   (width, length) = (length, width)
   let s = stroke.thickness / 2
@@ -48,14 +51,14 @@
     curve.line((-s, -y), relative: false),
     curve.line((-s, y), relative: false),
     curve.line((-length, y), relative: false),
-    stroke: stroke
+    stroke: stroke,
   ))
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
   }
   (
     mark: mark,
-    end: if rev { length } else { s }
+    end: if rev { length } else { s },
   )
 }
 
@@ -67,15 +70,17 @@
   fill: auto,
   rev: false,
   stroke: auto,
-  line: stroke()
+  line: stroke(),
 ) = {
   let is-auto-stroke = stroke == auto
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: .8
+    line,
+    length: length,
+    width: width,
+    default-ratio: .8,
   )
-  
+
   let linewidth = stroke.thickness
   let Δl = length * inset
   let dhalf = 0.5 * width
@@ -85,21 +90,21 @@
     // very common optimization for filled arrows
     polygon(
       (0pt, 0pt),
-      (-length, dhalf), 
-      (-length + Δl, 0pt), 
-      (-length, -dhalf), 
-      stroke: none, 
-      fill: utility.if-auto(stroke.paint, black)
+      (-length, dhalf),
+      (-length + Δl, 0pt),
+      (-length, -dhalf),
+      stroke: none,
+      fill: utility.if-auto(stroke.paint, black),
     )
     tip-length = length / 2
   } else {
     let tanα = dhalf / length
     let α = calc.atan(tanα)
-    let sinα  = calc.sin(α)
+    let sinα = calc.sin(α)
     let x3 = 0.5 * linewidth / sinα
-    
+
     let (x, x4, y) = if inset == 0% {
-      let x = length - linewidth/2
+      let x = length - linewidth / 2
       (x, x, tanα * (x - x3))
     } else {
       let tanβ = dhalf / Δl
@@ -114,29 +119,29 @@
     }
     tip-length = x3
     polygon(
-      (-x3, 0pt), 
-      (-x, y), 
-      (-x4, 0pt), 
-      (-x, -y), 
+      (-x3, 0pt),
+      (-x, y),
+      (-x4, 0pt),
+      (-x, -y),
       stroke: std.stroke(
-        thickness: linewidth, 
-        paint: utility.if-auto(stroke.paint, black), 
+        thickness: linewidth,
+        paint: utility.if-auto(stroke.paint, black),
         dash: stroke.dash,
-        miter-limit: 7, 
-        join: "miter"
-      ), 
-      fill: utility.chained-if-auto(fill, stroke.paint, black)
+        miter-limit: 7,
+        join: "miter",
+      ),
+      fill: utility.chained-if-auto(fill, stroke.paint, black),
     )
   }
 
-  
+
   let mark = place(path)
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
   }
   (
     mark: mark,
-    end: if rev { length - tip-length } else { length - Δl}
+    end: if rev { length - tip-length } else { length - Δl },
   )
 }
 
@@ -150,12 +155,14 @@
   rev: false,
   stroke: auto,
   fill: auto,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: .8
+    line,
+    length: length,
+    width: width,
+    default-ratio: .8,
   )
 
   let s = 0.5 * stroke.thickness
@@ -173,16 +180,16 @@
     (-length + s, -0.5 * width + s),
     fill: utility.chained-if-auto(fill, stroke.paint, black),
     stroke: std.stroke(
-      thickness: stroke.thickness, 
-      paint: utility.if-auto(stroke.paint, black), 
+      thickness: stroke.thickness,
+      paint: utility.if-auto(stroke.paint, black),
       dash: stroke.dash,
-      miter-limit: 7, 
-      join: "round"
-    )
+      miter-limit: 7,
+      join: "round",
+    ),
   ))
-  
+
   let end = length - inset - s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
     end = length - s
@@ -190,7 +197,7 @@
 
   (
     mark: mark,
-    end: end
+    end: end,
   )
 }
 
@@ -200,12 +207,14 @@
   width: auto,
   rev: false,
   stroke: auto,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: .8
+    line,
+    length: length,
+    width: width,
+    default-ratio: .8,
   )
 
   let s = stroke.thickness / 2
@@ -217,41 +226,43 @@
     curve.line((-tip-length, 0pt), relative: false),
     curve.line((-length + s, -0.5 * width + s), relative: false),
     stroke: std.stroke(
-      thickness: stroke.thickness, 
-      paint: utility.if-auto(stroke.paint, black), 
+      thickness: stroke.thickness,
+      paint: utility.if-auto(stroke.paint, black),
       dash: stroke.dash,
-      miter-limit: 7, 
-      cap: "round"
-    )
+      miter-limit: 7,
+      cap: "round",
+    ),
   ))
 
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: length))
   }
 
   (
     mark: mark,
-    end: if rev { length - tip-length } else { tip-length }
+    end: if rev { length - tip-length } else { tip-length },
   )
 }
 
 #let diamond(
-  length: 565.69%, 
+  length: 565.69%,
   width: auto,
   fill: auto,
   stroke: auto,
   align: center,
-  line: stroke()
-) = { 
+  line: stroke(),
+) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: 1
+    line,
+    length: length,
+    width: width,
+    default-ratio: 1,
   )
   let dhalf = 0.5 * width
   let tip-length
-  
+
   let tanα = dhalf / length * 2
   let α = calc.atan(tanα)
   let tip-length = 0.5 * stroke.thickness / calc.sin(α)
@@ -266,12 +277,12 @@
     (-length / 2, -dhalf + top-length),
     (-length + tip-length, 0pt),
     stroke: stroke,
-    fill: utility.chained-if-auto(fill, stroke.paint, black)
+    fill: utility.chained-if-auto(fill, stroke.paint, black),
   ))
-  
+
   (
     mark: mark,
-    end: length - tip-length - offset
+    end: length - tip-length - offset,
   )
 }
 
@@ -281,31 +292,31 @@
   fill: auto,
   stroke: auto,
   align: center,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: 1
+    line,
+    length: length,
+    width: width,
+    default-ratio: 1,
   )
   assert(align in (center, end))
   let offset = if align == center { length / 2 } else { 0pt }
   let s = stroke.thickness / 2
-  let y = width/2 - s
-  let mark = place(dx: offset,
-    polygon(
-      (-s, y),
-      (-length + s, y),
-      (-length + s, -y),
-      (-s, -y),
-      stroke: stroke, 
-      fill: utility.chained-if-auto(fill, stroke.paint, black),
-    )
-  )
+  let y = width / 2 - s
+  let mark = place(dx: offset, polygon(
+    (-s, y),
+    (-length + s, y),
+    (-length + s, -y),
+    (-s, -y),
+    stroke: stroke,
+    fill: utility.chained-if-auto(fill, stroke.paint, black),
+  ))
 
   (
-    mark: mark, 
-    end: length - s - offset
+    mark: mark,
+    end: length - s - offset,
   )
 }
 
@@ -317,31 +328,31 @@
   fill: auto,
   stroke: auto,
   align: center,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width, length) = utility.process-dims(
-    line, length: length, width: width,
-    default-ratio: 1
+    line,
+    length: length,
+    width: width,
+    default-ratio: 1,
   )
   let s = stroke.thickness / 2
   let y = width / 2 - s
-  
+
   assert(align in (center, end))
   let offset = if align == center { length / 2 } else { 0pt }
-  
-  let mark = place(dx: -length + s + offset, dy: -y,
-    ellipse(
-      width: length - 2 * s,
-      height: width - 2 * s,
-      stroke: stroke, 
-      fill: utility.chained-if-auto(fill, stroke.paint, black),
-    )
-  )
+
+  let mark = place(dx: -length + s + offset, dy: -y, ellipse(
+    width: length - 2 * s,
+    height: width - 2 * s,
+    stroke: stroke,
+    fill: utility.chained-if-auto(fill, stroke.paint, black),
+  ))
 
   (
-    mark: mark, 
-    end: length - s - offset
+    mark: mark,
+    end: length - s - offset,
   )
 }
 
@@ -352,27 +363,27 @@
   phase: auto,
   stroke: auto,
   align: center,
-  line: stroke()
+  line: stroke(),
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (length,) = utility.process-dims(
-    line, length: length
+    line,
+    length: length,
   )
   if phase == auto {
-    if n == 4 { phase = 45deg }
-    else { phase = -90deg }
+    if n == 4 { phase = 45deg } else { phase = -90deg }
   }
-  
+
   assert(align in (center, end))
   let offset = if align == end { -length } else { 0pt }
 
   let mark = for i in range(n) {
-    place(dx: offset, std.line(length: length, angle: phase + 360deg*i/n, stroke: stroke))
+    place(dx: offset, std.line(length: length, angle: phase + 360deg * i / n, stroke: stroke))
   }
 
   (
     mark: mark,
-    end: -offset
+    end: -offset,
   )
 }
 
@@ -387,7 +398,8 @@
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width,) = utility.process-dims(
-    line, width: width
+    line,
+    width: width,
   )
 
   let s = stroke.thickness / 2
@@ -399,11 +411,11 @@
       angle: -arc / 2,
       arc: arc,
       radius: radius,
-      stroke: stroke
-    )
+      stroke: stroke,
+    ),
   )
   let end = s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: width / 2))
     end = radius
@@ -411,7 +423,7 @@
 
   (
     mark: mark,
-    end: end
+    end: end,
   )
 }
 
@@ -425,7 +437,8 @@
 ) = {
   stroke = utility.process-stroke(line, stroke)
   let (width,) = utility.process-dims(
-    line, width: width
+    line,
+    width: width,
   )
 
   let s = stroke.thickness / 2
@@ -438,8 +451,8 @@
         angle: -90deg,
         arc: arc,
         radius: r,
-        stroke: stroke
-      )
+        stroke: stroke,
+      ),
     )
     place(
       arc-impl(
@@ -447,12 +460,12 @@
         angle: 90deg,
         arc: -arc,
         radius: r,
-        stroke: stroke
-      )
+        stroke: stroke,
+      ),
     )
   }
   let end = r - s
-  
+
   if rev {
     mark = scale(x: -100%, place(mark, dx: r + s))
     end = 0pt
@@ -460,7 +473,7 @@
 
   (
     mark: mark,
-    end: end + s
+    end: end + s,
   )
 }
 
@@ -475,49 +488,50 @@
   let sharp = false
   stroke = utility.process-stroke(line, stroke)
   let (width,) = utility.process-dims(
-    line, width: width
+    line,
+    width: width,
   )
-  
+
   let s = stroke.thickness / 2
   stroke = if sharp {
     (thickness: stroke.thickness, paint: stroke.paint, join: "bevel", cap: "butt")
   } else {
     (thickness: stroke.thickness, paint: stroke.paint, join: "round", cap: "round")
   }
-  let x0 = if sharp { stroke.thickness/width*10pt } else { -s }
+  let x0 = if sharp { stroke.thickness / width * 10pt } else { -s }
   let mark = place(
     curve(
       curve.move((-width * 0.42, -width / 2 + s)),
       curve.cubic(
-        (-width * 0.32, -width * 0.1 + s), 
-        none, 
+        (-width * 0.32, -width * 0.1 + s),
+        none,
         (x0, 0pt),
-        relative: false
+        relative: false,
       ),
       curve.cubic(
-        none, 
-        (-width * 0.32, width * 0.1 - s), 
+        none,
+        (-width * 0.32, width * 0.1 - s),
         (-width * 0.42, width / 2 - s),
-        relative: false
+        relative: false,
       ),
-      stroke: stroke
-    )
+      stroke: stroke,
+    ),
   )
-  
+
   (
     mark: mark,
-    end: stroke.thickness
+    end: stroke.thickness,
   )
 }
 
 
 #let combine(
-  line: stroke(), 
-  ..marks
+  line: stroke(),
+  ..marks,
 ) = (line: stroke()) => {
   let marks = marks.pos()
   let linewidth = utility.if-auto(line.thickness, 1pt)
-  
+
   let combined-mark
   let pos = 0pt
   let end
@@ -540,8 +554,8 @@
   }
 
   (
-    mark: combined-mark, 
-    end: end
+    mark: combined-mark,
+    end: end,
   )
 }
 
