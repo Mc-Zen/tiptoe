@@ -13,23 +13,23 @@
 #let describe-mark(
   mark,
   name: "",
-  len: auto, 
+  len: auto,
   wid: 1cm,
   width: auto,
   length: auto,
   ..annotations
 ) = {
-  
+
   let stroke = blue.lighten(60%) + 7pt
   let fill = none
 
 
   let args = (:)
-  if width != auto { 
+  if width != auto {
     args.width = width
     wid = width
-  } 
-  if length != auto { 
+  }
+  if length != auto {
     args.length = length
     if len == auto { len = length }
   } else {
@@ -37,7 +37,7 @@
   }
 
   if type(mark) != array { mark = (mark,)}
-  
+
   box(inset: (x: 1em, y: .5em, bottom: 1em), box(
     width: len, height: wid, stroke: .1pt + luma(if dark {60%} else {0%}),
     {

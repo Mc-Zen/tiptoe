@@ -9,7 +9,7 @@
     (12pt, 45pt),
     (5pt, 60pt)
   ))
-  place(path(tip: round, 
+  place(path(tip: round,
     (10pt, 30pt),
     (30pt, 40pt),
     (35pt, 55pt)
@@ -28,7 +28,7 @@
     ((15pt, 45pt), (0pt, -8pt)),
     (12pt, 60pt)
   ))
-  place(path(tip: stealth, 
+  place(path(tip: stealth,
     (10pt, 30pt),
     ((30pt, 40pt), (-4pt, -7pt)),
     (35pt, 55pt)
@@ -48,7 +48,7 @@
     (14pt, 45pt),
     (8pt, 57pt)
   ))
-  place(path(tip: square, 
+  place(path(tip: square,
     (10pt, 25pt),
     // ((25pt, 38pt), (-4pt, -7pt)),
     ((25pt, 52pt), (2pt, -16pt))
@@ -69,7 +69,7 @@
     (12pt, 45pt),
     (5pt, 60pt)
   ))
-  place(path(tip: circle, 
+  place(path(tip: circle,
     (10pt, 27pt),
     (26pt, 40pt),
     (25pt, 55pt)
@@ -89,7 +89,7 @@
   place(dx: 80pt, figure3)
   place(dx: 135pt, dy: 20pt, text(1.8em, weight: "black", style: "italic")[tiptoe])
   place(dx: 139pt, dy: 15pt, text(.4em)[_made with_])
-  place(dx: 210pt, figure4) 
+  place(dx: 210pt, figure4)
 })
 
 #logo

@@ -3,7 +3,7 @@
 
 
 #let test-curve = line.with(
-  tip: stealth, 
+  tip: stealth,
   start: (0pt, .2cm),
   end: (2cm - 4pt, .2cm)
 )
