@@ -104,7 +104,10 @@
   } else {
     (curve.line(points.at(0)),)
   }
-  coords += points.slice(1).chunks(3).map(x => curve.cubic(..x, relative: false))
+  coords += points
+    .slice(1)
+    .chunks(3)
+    .map(x => curve.cubic(..x, relative: false))
 
   coords
 }

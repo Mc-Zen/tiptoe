@@ -7,9 +7,8 @@
 
 
 #let template(
-  body
+  body,
 ) = {
-
   set std.curve(stroke: foreground)
   set std.line(stroke: foreground)
 
@@ -31,7 +30,8 @@
 }
 
 #let tline(..args) = box(
-  height: 1cm, line(length: 1.3cm, stroke: 1.5pt +  foreground, ..args)
+  height: 1cm,
+  line(length: 1.3cm, stroke: 1.5pt + foreground, ..args),
 )
 
 #let code-and-tip(code) = {
@@ -39,6 +39,6 @@
   (
     tline(tip: j, length: 1cm),
     raw(code, lang: "typc"),
-    []
+    [],
   )
 }

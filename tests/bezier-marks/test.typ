@@ -20,7 +20,8 @@
   origin: (1cm, 1cm),
   angle: 0deg,
   arc: -360deg,
-  stroke: red + 1mm, radius: 1.2cm,
+  stroke: red + 1mm,
+  radius: 1.2cm,
   shorten: (start: 100%, end: 100%),
   tip: stealth,
   toe: bar.with(stroke: black),
@@ -30,29 +31,33 @@
 
 
 #path(
-  tip: stealth, toe: stealth,
-  ((0pt, 0pt)),
+  tip: stealth,
+  toe: stealth,
+  (0pt, 0pt),
   ((50pt, 50pt), (-20pt, 0pt), (0pt, 0pt)),
 )
 #pagebreak()
 #path(
-  tip: stealth, toe: stealth,
+  tip: stealth,
+  toe: stealth,
   ((0pt, 0pt), (20pt, -350pt), (0pt, 50pt)),
   ((50pt, 50pt), (-10pt, 0pt), (110pt, 110pt)),
 )
 #pagebreak()
 #path(
-  tip: stealth, toe: stealth,
+  tip: stealth,
+  toe: stealth,
   ((0pt, 0pt), (20pt, -350pt), (0pt, 0pt)),
   ((25pt, 25pt), (0pt, -20pt), (20pt, 0pt)),
   ((50pt, 50pt), (0pt, 0pt), (110pt, 110pt)),
 )
 #pagebreak()
 #path(
-  tip: stealth, toe: stealth,
+  tip: stealth,
+  toe: stealth,
   ((0pt, 0pt), (-20pt, 0pt)),
   ((25pt, 25pt), (0pt, 0pt), (0pt, 0pt)),
-  ((50pt, 50pt),  (-20pt, 0pt)),
+  ((50pt, 50pt), (-20pt, 0pt)),
 )
 
 #pagebreak()
@@ -67,7 +72,7 @@
 #compare(
   (0pt, 0pt),
   (10pt, 0pt),
-  (20pt, 20pt)
+  (20pt, 20pt),
 )
 
 #pagebreak()
@@ -82,9 +87,9 @@
 #pagebreak()
 
 #compare(
-  ((0pt, 0pt)),
+  (0pt, 0pt),
   ((10pt, 0pt), (-10pt, 0pt)),
-  ((20pt, 20pt)),
+  (20pt, 20pt),
 )
 #pagebreak()
 
@@ -104,12 +109,12 @@
 
 #compare(
   ((0pt, 0pt), (-20pt, 0pt)),
-  ((50pt, 10pt), (-20pt, 0pt))
+  ((50pt, 10pt), (-20pt, 0pt)),
 )
 #pagebreak()
 
 #compare(
   ((0pt, 0pt), (-20pt, 0pt), (20pt, 0pt)),
-  ((50pt, 10pt), (-20pt, 0pt), (20pt, 0pt))
+  ((50pt, 10pt), (-20pt, 0pt), (20pt, 0pt)),
 )
 

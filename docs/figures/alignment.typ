@@ -15,36 +15,63 @@
   let line = line.with(length: len, stroke: 1.4pt + foreground)
 
   place(dx: 0pt, dy: 4pt, box(width: da)[Always end-aligned tips])
-  place(dx: da, dy: 4pt, box(width: 2*da)[Tips with configurable alignment ])
-  place(dy: 2.13em, dx: da, box(width: da)[`align: center` #text(.8em)[(default)]])
-  place(dy: 2.13em, dx: 2*da, box(width: da)[`align: end`])
+  place(dx: da, dy: 4pt, box(width: 2 * da)[Tips with configurable alignment ])
+  place(dy: 2.13em, dx: da, box(
+    width: da,
+  )[`align: center` #text(.8em)[(default)]])
+  place(dy: 2.13em, dx: 2 * da, box(width: da)[`align: end`])
 
   let tips = (
-    stealth, round, straight,
-    stealth.with(rev: true), round.with(rev: true), straight.with(rev: true),
-    tikz, barb, hooks
+    stealth,
+    round,
+    straight,
+    stealth.with(rev: true),
+    round.with(rev: true),
+    straight.with(rev: true),
+    tikz,
+    barb,
+    hooks,
   )
-  place(dx: da, std.line(angle: 90deg, stroke: .3pt, length: y0 + dy*tips.len()))
+  place(dx: da, std.line(
+    angle: 90deg,
+    stroke: .3pt,
+    length: y0 + dy * tips.len(),
+  ))
   for (i, tip) in tips.enumerate() {
     place(dx: da - len, dy: y0 + i * dy, line(tip: tip))
   }
 
   let tips = (
-    square, circle, diamond, bar, rays
+    square,
+    circle,
+    diamond,
+    bar,
+    rays,
   )
-  place(dy: 2em, dx: 2*da, std.line(angle: 90deg, stroke: .3pt, length: y0 + dy*tips.len() - 2em))
+  place(dy: 2em, dx: 2 * da, std.line(
+    angle: 90deg,
+    stroke: .3pt,
+    length: y0 + dy * tips.len() - 2em,
+  ))
   for (i, tip) in tips.enumerate() {
-    place(dx: 2*da - len, dy: y0 + i * dy, line(tip: tip))
+    place(dx: 2 * da - len, dy: y0 + i * dy, line(tip: tip))
   }
 
   let tips = (
-    square.with(align: end), circle.with(align: end), diamond.with(align: end), bar.with(align: end), rays.with(align: end),
+    square.with(align: end),
+    circle.with(align: end),
+    diamond.with(align: end),
+    bar.with(align: end),
+    rays.with(align: end),
   )
-  place(dy: 0pt, dx: 3*da, std.line(angle: 90deg, stroke: .3pt, length: y0 + dy*tips.len()))
+  place(dy: 0pt, dx: 3 * da, std.line(
+    angle: 90deg,
+    stroke: .3pt,
+    length: y0 + dy * tips.len(),
+  ))
   for (i, tip) in tips.enumerate() {
-    place(dx: 3*da - len, dy: y0 + i * dy, line(tip: tip))
+    place(dx: 3 * da - len, dy: y0 + i * dy, line(tip: tip))
   }
-
 }))
 
 #content

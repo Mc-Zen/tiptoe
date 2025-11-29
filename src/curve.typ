@@ -3,7 +3,9 @@
 #import "path-to-curve.typ": path-to-curve
 
 
-#let first-not-none-or-auto(..args) = args.pos().find(x => x != none and x != auto)
+#let first-not-none-or-auto(..args) = (
+  args.pos().find(x => x != none and x != auto)
+)
 
 #let add(p, q) = p.zip(q).map(array.sum)
 #let sub(p, q) = p.zip(q).map(((a, b)) => a - b)
@@ -69,7 +71,9 @@
   }
   let polygon = (base,)
 
-  for (i, segment) in segments.enumerate().slice(index-last-absolute-segment + 1) {
+  for (i, segment) in segments
+    .enumerate()
+    .slice(index-last-absolute-segment + 1) {
     if segment.func() == std.curve.line {
       base = add(base, segment.end)
       polygon.push(base)
@@ -233,7 +237,12 @@
   shorten: 100%,
 ) = {
   if segments.named().len() != 0 {
-    assert(false, message: "Unexpected named argument \"" + segments.named().keys().first() + "\"")
+    assert(
+      false,
+      message: "Unexpected named argument \""
+        + segments.named().keys().first()
+        + "\"",
+    )
   }
 
   set place(left)
@@ -244,7 +253,8 @@
 
   assert(
     type(shorten) in (ratio, dictionary),
-    message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten)),
+    message: "Expected ratio or dictionary for parameter `shorten`, found "
+      + str(type(shorten)),
   )
   if type(shorten) == ratio {
     shorten = (start: shorten, end: shorten)
@@ -282,7 +292,10 @@
           if se.func() == std.curve.line {
             if relative {
               // We will change the first curve.move, so this second segment cannot be relative
-              segments.at(1) = std.curve.line(add(vertex0, se.end), relative: false)
+              segments.at(1) = std.curve.line(
+                add(vertex0, se.end),
+                relative: false,
+              )
             }
             se.end
           } else if se.func() == std.curve.quad {
@@ -332,7 +345,10 @@
         segments.first() = std.curve.line(first-segment.end, relative: false)
         segments.insert(0, std.curve.move(new-vertex0))
       } else if first-segment.func() == std.curve.quad {
-        let vertex1 = first-not-none-or-auto(first-segment.control, first-segment.end)
+        let vertex1 = first-not-none-or-auto(
+          first-segment.control,
+          first-segment.end,
+        )
         let (mark, new-vertex0) = treat-toe(
           toe,
           (0pt, 0pt),
@@ -387,7 +403,10 @@
       }
 
       if final-segment.func() == std.curve.close {
-        assert(false, message: "Tips are not supported on the `curve.close` element")
+        assert(
+          false,
+          message: "Tips are not supported on the `curve.close` element",
+        )
       } else if final-segment.func() == std.curve.line {
         let (mark, new-vertex-n, args) = treat-tip(
           tip,
