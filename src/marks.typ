@@ -378,7 +378,11 @@
   let offset = if align == end { -length } else { 0pt }
 
   let mark = for i in range(n) {
-    place(dx: offset, std.line(length: length, angle: phase + 360deg * i / n, stroke: stroke))
+    place(dx: offset, std.line(
+      length: length,
+      angle: phase + 360deg * i / n,
+      stroke: stroke,
+    ))
   }
 
   (
@@ -494,9 +498,19 @@
 
   let s = stroke.thickness / 2
   stroke = if sharp {
-    (thickness: stroke.thickness, paint: stroke.paint, join: "bevel", cap: "butt")
+    (
+      thickness: stroke.thickness,
+      paint: stroke.paint,
+      join: "bevel",
+      cap: "butt",
+    )
   } else {
-    (thickness: stroke.thickness, paint: stroke.paint, join: "round", cap: "round")
+    (
+      thickness: stroke.thickness,
+      paint: stroke.paint,
+      join: "round",
+      cap: "round",
+    )
   }
   let x0 = if sharp { stroke.thickness / width * 10pt } else { -s }
   let mark = place(

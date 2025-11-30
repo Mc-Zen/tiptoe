@@ -48,7 +48,12 @@
   shorten: 100%,
 ) = {
   if args.named().len() != 0 {
-    assert(false, message: "Unexpected named argument \"" + args.named().keys().first() + "\"")
+    assert(
+      false,
+      message: "Unexpected named argument \""
+        + args.named().keys().first()
+        + "\"",
+    )
   }
 
   set place(left)
@@ -57,7 +62,8 @@
 
   assert(
     type(shorten) in (ratio, dictionary),
-    message: "Expected ratio or dictionary for parameter `shorten`, found " + str(type(shorten)),
+    message: "Expected ratio or dictionary for parameter `shorten`, found "
+      + str(type(shorten)),
   )
   if type(shorten) == ratio {
     shorten = (start: shorten, end: shorten)
@@ -98,7 +104,13 @@
     let marks
     if toe != none and points.len() >= 2 {
       assert-mark(toe, kind: "toe")
-      let (mark, end) = treat-mark(toe, 0, 1, pos: start, shorten: shorten.start)
+      let (mark, end) = treat-mark(
+        toe,
+        0,
+        1,
+        pos: start,
+        shorten: shorten.start,
+      )
       if type(points.first().at(0)) == array {
         points.first().at(0) = end
       } else {
@@ -122,6 +134,15 @@
       fill-rule = std.curve.fill-rule
     }
 
-    place(path-to-curve(..points, stroke: stroke, fill: fill, closed: closed, fill-rule: fill-rule)) + marks
+    (
+      place(path-to-curve(
+        ..points,
+        stroke: stroke,
+        fill: fill,
+        closed: closed,
+        fill-rule: fill-rule,
+      ))
+        + marks
+    )
   }
 }

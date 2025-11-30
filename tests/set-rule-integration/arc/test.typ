@@ -3,7 +3,7 @@
 
 
 #let test-curve = arc.with(
-  tip: stealth, 
+  tip: stealth,
 )
 
 #test-curve()

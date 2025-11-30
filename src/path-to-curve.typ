@@ -17,7 +17,9 @@
   vertices = vertices.pos()
   if vertices.len() == 0 { return }
 
-  let is-vertex(v) = (type(v) == array and type(v.first()) != array) or v.len() == 1
+  let is-vertex(v) = (
+    (type(v) == array and type(v.first()) != array) or v.len() == 1
+  )
   let extract-vertex(v) = {
     if is-vertex(v) {
       if v.len() == 2 { v } else { v.first() }
@@ -58,7 +60,9 @@
   }
 
   let to-curve-element(x) = {
-    if x.len() == 1 { curve.line(..x) } else if x.len() == 2 { curve.quad(..x) } else if x.len() == 3 {
+    if x.len() == 1 { curve.line(..x) } else if x.len() == 2 {
+      curve.quad(..x)
+    } else if x.len() == 3 {
       curve.cubic(..x)
     }
   }
